@@ -26,14 +26,19 @@ import java.util.Objects;
 import static com.intellij.openapi.util.Disposer.newDisposable;
 
 public class TrackerLog extends AnAction {
+
+    //this is Zach's old code, so it probably needs updating
     public void app(String filename, String type, int offset, String content) throws IOException{
         FileWriter fw = null;
         BufferedWriter bw = null;
+        // TODO: 4/6/2018 add timestamp
         String data = type + "," + offset + "," + content + "," + "\n";
 
         File file = new File(filename);
 
-        file.createNewFile();
+        if (!file.exists()) {
+            file.createNewFile();
+        }
 
         fw = new FileWriter(file.getAbsoluteFile(), true);
         bw = new BufferedWriter(fw);
@@ -47,13 +52,15 @@ public class TrackerLog extends AnAction {
 
 
         Document d = editor.getDocument();
+
+        //this class allows us to track document events
         d.addDocumentListener(new DocumentListener() {
             @Override
-            public void documentChanged(DocumentEvent event) {
+            public void beforeDocumentChange(DocumentEvent event) {
                 int offset = event.getOffset();
                 String content;
                 String type;
-                String path = "test.csv";
+                String path = "filename.csv";
                 content = "" + event.getNewFragment();
                 int oldSize = event.getOldLength();
                 int newSize = event.getNewLength();
@@ -63,7 +70,7 @@ public class TrackerLog extends AnAction {
                     try {
                         app(path, type, offset, content);
                     } catch (IOException e) {
-
+                        // TODO: 4/6/2018 better error handling
                     }
                 }
                 if (!(("" + event.getOldFragment()).equals(""))) {
@@ -72,7 +79,7 @@ public class TrackerLog extends AnAction {
                     try {
                         app(path, type, offset, content);
                     } catch (IOException e) {
-
+                        // TODO: 4/6/2018 better error handling
                     }
                 }
             }
@@ -80,9 +87,9 @@ public class TrackerLog extends AnAction {
 
     }
 
+//This is the old approach. In case someone needs it
 
-
-    /*
+    /*      //tracks editor events such as copy paste delete
             CaretModel caretModel = editor.getCaretModel();
             a.addAnActionListener(new AnActionListener.Adapter() {
                 int offset;
@@ -116,16 +123,6 @@ public class TrackerLog extends AnAction {
                             offset = caretModel.getOffset();
                             app(path, type, offset, content);
                         }
-                        else if (a.getId(action).equals("EditorEnter")) {
-                            type = "add";
-                            content = "enter";
-                            app(path, type, offset, content);
-                        }
-                        else if (a.getId(action).equals("EditorTab")) {
-                            type = "add";
-                            content = "tab";
-                            app(path, type, offset, content);
-                        }
                     }
                     catch (FileNotFoundException e){
 
@@ -155,6 +152,8 @@ public class TrackerLog extends AnAction {
 
                 }
             });
+
+            //Tracks keyboard and mouse event
             IdeEventQueue b = IdeEventQueue.getInstance();
             b.addPostprocessor(new IdeEventQueue.EventDispatcher() {
                 @Override
