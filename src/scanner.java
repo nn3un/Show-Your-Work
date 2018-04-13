@@ -18,6 +18,7 @@ public class scanner {
 			if(check.equals("add")){
 				int number = Integer.parseInt(scanner.next());
 				String toAdd = scanner.next();
+				toAdd = toAdd.replace('`', ',');
 				content = content.substring(0, number)+toAdd+content.substring(number);
 			}
 			else if (check.equals("sub")) {
