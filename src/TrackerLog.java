@@ -28,10 +28,11 @@ import static com.intellij.openapi.util.Disposer.newDisposable;
 public class TrackerLog extends AnAction {
 
     //this is Zach's old code, so it probably needs updating
-    public void app(String filename, String type, int offset, String content) throws IOException{
+    public void app(String filename, String type, int offset, String Content) throws IOException{
         FileWriter fw = null;
         BufferedWriter bw = null;
         // TODO: 4/6/2018 add timestamp
+        String content = Content.replace(',', '`');
         String data = type + "," + offset + "," + content + "," + "\n";
 
         File file = new File(filename);
