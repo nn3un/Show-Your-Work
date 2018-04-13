@@ -96,7 +96,7 @@ public class TrackerLog extends AnAction {
                 int offset;
                 String content;
                 String type;
-                String path = "C:/Users/nnuzaba47/eclipse-Workspace/Practice/Documentstest.csv";
+                String path = "Documentstest.csv";
                 @Override
                 public void beforeActionPerformed(AnAction action, DataContext dataContext, AnActionEvent event) {
                     offset = caretModel.getOffset();
@@ -159,7 +159,7 @@ public class TrackerLog extends AnAction {
             b.addPostprocessor(new IdeEventQueue.EventDispatcher() {
                 @Override
                 public boolean dispatch(@NotNull AWTEvent awtEvent) {
-                    String path = "C:/Users/nnuzaba47/eclipse-Workspace/Practice/Documentstest.csv";
+                    String path = "Documentstest.csv";
                     if (awtEvent.getID() == KeyEvent.KEY_PRESSED) {
                         try {
                             if (!((KeyEvent)awtEvent).isActionKey() && ((KeyEvent)awtEvent).getKeyCode() != KeyEvent.VK_BACK_SPACE){
