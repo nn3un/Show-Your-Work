@@ -67,7 +67,7 @@ public class TrackerLog extends AnAction {
                 int newSize = event.getNewLength();
                 if (!(("" + event.getNewFragment()).equals(""))) {
                     type = "add";
-                    content = "" + event.getNewFragment() + ",";
+                    content = "" + event.getNewFragment();
                     try {
                         app(path, type, offset, content);
                     } catch (IOException e) {
@@ -76,7 +76,7 @@ public class TrackerLog extends AnAction {
                 }
                 if (!(("" + event.getOldFragment()).equals(""))) {
                     type = "sub";
-                    content = "" + event.getOldFragment() + ",";
+                    content = "" + event.getOldFragment();
                     try {
                         app(path, type, offset, content);
                     } catch (IOException e) {
