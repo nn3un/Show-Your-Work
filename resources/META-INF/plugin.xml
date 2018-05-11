@@ -1,11 +1,11 @@
-<plugin>
-  <id>com.SYW.unique.plugin.id22</id>
-  <name>Track Keyboard</name>
-  <version>1.0</version>
+<idea-plugin>
+  <id>plugin</id>
+  <name>Track Keyboard1</name>
+  <version>4.0</version>
   <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
 
   <description><![CDATA[
-      Nothing special.<br>
+      Enter short description for your plugin here.<br>
       <em>most HTML tags may be used</em>
     ]]></description>
 
@@ -29,10 +29,14 @@
   </extensions>
 
   <actions>
-    <!-- This is where the action is registered -->
-    <action id="DocumentEvent" class="TrackerLog" text="Start Tracking Change" description="Tracks Document Change">
+    <!-- Add your actions here -->
+    <action id="Generate Zip" class="GenerateZip" text="Zip Generator"
+            description="Generates CSV and copy of originial">
+      <add-to-group group-id="LocalHistory" anchor="last"/>
+    </action>
+    <action id="DocumentEvent" class="TrackerLog" text="Start Tracking Change pl" description="Tracks Document Change">
       <add-to-group group-id="LocalHistory" anchor="first"/>
     </action>
   </actions>
 
-</plugin>
+</idea-plugin>
