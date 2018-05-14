@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14628854-71b7-4d02-abcd-8b9fc567dccb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/CSVFileWriter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/DocumentActionLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FileFromLogGenerator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/diffGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Show Your Work.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Show Your Work.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/GenerateZip.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/GenerateZip.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/META-INF/plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/TrackerLog$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/TrackerLog$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/TrackerLog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/TrackerLog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/scanner.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/scanner.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/resources/META-INF/plugin.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GenerateZip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GenerateZip.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/TrackerLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TrackerLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/scanner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/scanner.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -60,11 +46,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="false">
+      <file leaf-file-name="plugin.xml" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="31" column="18" lean-forward="true" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+            <state relative-caret-position="180">
+              <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
               <folding>
                 <element signature="n#description#0;n#idea-plugin#0;n#!!top" />
               </folding>
@@ -96,10 +82,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FileFromLogGenerator.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="FileFromLogGenerator.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FileFromLogGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-221">
+            <state relative-caret-position="340">
               <caret line="20" column="138" selection-start-line="20" selection-start-column="138" selection-end-line="20" selection-end-column="138" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -158,13 +144,13 @@
         <option value="$PROJECT_DIR$/out/production/Show Your Work/META-INF/plugin.xml" />
         <option value="$PROJECT_DIR$/src/diff_match_patch.java" />
         <option value="$PROJECT_DIR$/src/TrackerLog.java" />
-        <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
         <option value="$PROJECT_DIR$/src/DocumentActionLogger.java" />
         <option value="$PROJECT_DIR$/src/CSVFileWriter.java" />
         <option value="$PROJECT_DIR$/src/GenerateZip.java" />
         <option value="$PROJECT_DIR$/src/FileFromLogGenerator.java" />
         <option value="$PROJECT_DIR$/src/diffGenerator.java" />
         <option value="$PROJECT_DIR$/src/scanner.java" />
+        <option value="$PROJECT_DIR$/resources/META-INF/plugin.xml" />
       </list>
     </option>
   </component>
@@ -718,16 +704,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="31" column="18" lean-forward="true" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
-          <folding>
-            <element signature="n#description#0;n#idea-plugin#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/diffGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
@@ -740,10 +716,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FileFromLogGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-221">
+        <state relative-caret-position="340">
           <caret line="20" column="138" selection-start-line="20" selection-start-column="138" selection-end-line="20" selection-end-column="138" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/META-INF/plugin.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+          <folding>
+            <element signature="n#description#0;n#idea-plugin#0;n#!!top" />
           </folding>
         </state>
       </provider>

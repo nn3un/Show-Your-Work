@@ -29,7 +29,6 @@
     </extensions>
 
     <actions>
-        <!-- T -->
         <group id="Document Event Log" class="DocumentActionLogger" popup="true"
                text="Show Your Plugin Tools" description="The group that houses the different plugin actions, located in Local history">
             <add-to-group group-id="VcsGroups" anchor="first"/>
@@ -38,7 +37,6 @@
             <action id="Generate Zip" class="GenerateZip" text="Generate Zip For Submission"
                     description="Zips up the original py file and the csv log">
             </action>
-            <!-- This action allows us to see how  -->
             <action id="currentFileFromLog" class="FileFromLogGenerator" text="Generate Original from Log"
                     description="This generates a txt file that generates a copy of the original by using the information from the log file">
             </action>
