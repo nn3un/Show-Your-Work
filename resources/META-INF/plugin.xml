@@ -1,42 +1,48 @@
 <idea-plugin>
-  <id>plugin</id>
-  <name>Track Keyboard1</name>
-  <version>4.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+    <id>UVACSUGresearchSYW</id>
+    <name>Show Your Work</name>
+    <version>1.0</version>
+    <vendor email="support@virginia.edu" url="http://www.cs.virginia.edu">UVA CS</vendor>
 
-  <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
-    ]]></description>
+    <description><![CDATA[
+	This plugin allows students to log their code development history<br>
+	<em>most HTML tags may be used</em>
+	]]></description>
 
-  <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
-    ]]>
-  </change-notes>
+    <change-notes><![CDATA[
+	<br>
+	<em>most HTML tags may be used</em>
+	]]>
+    </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="173.0"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="173.0"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+    on how to target different products -->
+    <!-- This depend statement allows us to run it with Pycharm, without it the plugin would only run on Intellij -->
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
 
-  <actions>
-    <!-- Add your actions here -->
-    <action id="Generate Zip" class="GenerateZip" text="Zip Generator"
-            description="Generates CSV and copy of originial">
-      <add-to-group group-id="LocalHistory" anchor="last"/>
-    </action>
-    <action id="DocumentEvent" class="TrackerLog" text="Start Tracking Change pl" description="Tracks Document Change">
-      <add-to-group group-id="LocalHistory" anchor="first"/>
-    </action>
-  </actions>
+    <actions>
+        <!-- T -->
+        <group id="Document Event Log" class="DocumentActionLogger" popup="true"
+               text="Show Your Plugin Tools" description="The group that houses the different plugin actions, located in Local history">
+            <add-to-group group-id="VcsGroups" anchor="first"/>
+            <action id="DocumentEvent" class="TrackerLog" text="Start Logging Edits" description="Logs the different editor actions ">
+            </action>
+            <action id="Generate Zip" class="GenerateZip" text="Generate Zip For Submission"
+                    description="Zips up the original py file and the csv log">
+            </action>
+            <!-- This action allows us to see how  -->
+            <action id="currentFileFromLog" class="FileFromLogGenerator" text="Generate Original from Log"
+                    description="This generates a txt file that generates a copy of the original by using the information from the log file">
+            </action>
+        </group>
+    </actions>
 
 </idea-plugin>
