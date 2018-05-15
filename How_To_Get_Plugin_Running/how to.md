@@ -6,7 +6,8 @@ This tutorial was written using the 2018 versions of [Intellij IDEA Community Ed
 ![Project Window](ss2.PNG)
 
 (If you're having trouble running the module, you can check Project Structure->Module->Source and make sure that you only have src as the only 'Source Folder', and resources as the only 'Resources Folder' and nothing else under '+Add content root'. However this is unlikely to be an issue)
-1. **Edit Run Configuration:** After that first select Build->Build Project from the menu bar. Afther this choose Run->Edit Configuration. If a configuration named 'Plugin' with a plugin icon next to it doensn't already exist, press the '+' button, then for 'Use classpath of module' select 'Show Your Work', and for JRE select the 'Pycharm Community Edition <version no>' that was created earlier. After that, pressing the 'Run' button should initiate a Pycharm window where the plugin would be loaded and can be tested.
+
+1.**Edit Run Configuration:** After that first select Build->Build Project from the menu bar. Afther this choose Run->Edit Configuration. If a configuration named 'Plugin' with a plugin icon next to it doensn't already exist, press the '+' button, then for 'Use classpath of module' select 'Show Your Work', and for JRE select the 'Pycharm Community Edition <version no>' that was created earlier. After that, pressing the 'Run' button should initiate a Pycharm window where the plugin would be loaded and can be tested.
 ![Run Configuration Window](ss3.PNG)
 
 
