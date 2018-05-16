@@ -1,4 +1,4 @@
-Logger
+*Logger
 	- [ ] Handle File Deletion
 	- [ ] Handle File Saves
 	- [ ] Handle File Renaming
@@ -11,5 +11,5 @@ Logger
 	- [ ] Test Generate Zip 
 	- [ ] Create some sort of reminder every time a new tab is opened, so user can remember to start the log
 
-Animator
-	- [ ]Build it
+*Animator
+	- [ ] Build it
