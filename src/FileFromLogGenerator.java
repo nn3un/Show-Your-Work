@@ -2,6 +2,7 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -46,7 +47,18 @@ public class FileFromLogGenerator extends AnAction {
     public void update(AnActionEvent e) {
         Project project = (Project)e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor)e.getData(CommonDataKeys.EDITOR);
-        //The button should only be available when there's a project and an editor tab opened
-        e.getPresentation().setVisible(project != null && editor != null);
+        if (project!= null && editor!= null){
+            VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+            if (file.getName().endsWith(".py")){
+                //Todo Use regex to replace
+                File logFile = new File(file.getCanonicalPath().replace(".py", ".csv"));
+                if (logFile.exists()){
+                    //The button should be active when there's a .py file involved and there's already a log file
+                    e.getPresentation().setVisible(true);
+                    return;
+                }
+            }
+        }
+        e.getPresentation().setVisible(false);
     }
 }

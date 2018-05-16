@@ -69,7 +69,18 @@ public class GenerateZip extends AnAction {
     public void update(AnActionEvent e) {
         Project project = (Project)e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor)e.getData(CommonDataKeys.EDITOR);
-        //The button should be active if the there's a project and an editor tab open
-        e.getPresentation().setVisible(project != null && editor != null);
+        if (project!= null && editor!= null){
+            VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
+            if (file.getName().endsWith(".py")){
+                //Todo Use regex to replace
+                File logFile = new File(file.getCanonicalPath().replace(".py", ".csv"));
+                if (logFile.exists()){
+                    //The button should be active when there's a .py file involved and there's already a log file
+                    e.getPresentation().setVisible(true);
+                    return;
+                }
+            }
+        }
+        e.getPresentation().setVisible(false);
     }
 }

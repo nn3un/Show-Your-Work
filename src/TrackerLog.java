@@ -59,7 +59,15 @@ public class TrackerLog extends AnAction {
     public void update(AnActionEvent e) {
         Project project = (Project) e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor) e.getData(CommonDataKeys.EDITOR);
-        //The button should be on if the there's a project and an editor tab open
-        e.getPresentation().setVisible(project != null && editor != null);
+        Document document = editor.getDocument();
+        if (project!= null && editor!=null){
+            VirtualFile file = FileDocumentManager.getInstance().getFile(document);
+            if (file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {
+                //The button would be available only when there is no listener in the document already and when it's a .py file
+                e.getPresentation().setVisible(true);
+                return;
+            }
+        }
+        e.getPresentation().setVisible(false);
     }
 }
