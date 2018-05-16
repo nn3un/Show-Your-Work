@@ -13,4 +13,3 @@ The 'Generate Zip for Submission' button creates a zip file named '(filename)_lo
 The 'Generate Original from Log' button generates a txt file that uses the CSV log file to replicate the original into a file named '(filename)_currentVersion.txt', also located in the same directory as the original.<br />
 
 
-
