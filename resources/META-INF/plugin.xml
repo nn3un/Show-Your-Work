@@ -23,7 +23,12 @@
     <!-- This depend statement allows us to run it with Pycharm, without it the plugin would only run on Intellij -->
     <depends>com.intellij.modules.lang</depends>
     -->
-
+    <!-- This project is initiated when a new project is opened -->
+    <project-components>
+        <component>
+            <implementation-class>ProjectInitializer</implementation-class>
+        </component>
+    </project-components>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
     </extensions>
