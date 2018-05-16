@@ -3,7 +3,7 @@ This plugin allows users to log their coding activity.
 
 To use the plugin, download the 'Show Your Work.jar' file, open a Pycharm Project, go to File->Settings->Plugins->Install from Disk and then select the .jar file and then restart.
 
-If there's an editor open, and it's a .py file, the following actions can be found under the VCS tab under the name "Show Your Plugin Tools". 
+If there's an editor open, and it's a .py file, the following actions can be found under the VCS tab under the name "Show Your Work Plugin Tools".
 ![Screenshot of IDE with plugin installed](locationOfPluginTools.png)
 
 Once an editor tab is opened, the 'Start Logging Edits' button creates or updates a CSV file named '<filename>.csv' located in the same directory as the original file.<br />
