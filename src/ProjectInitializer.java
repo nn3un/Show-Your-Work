@@ -18,6 +18,7 @@ import java.awt.*;
 import java.util.HashMap;
 public class ProjectInitializer implements ProjectComponent {
     public static HashMap<Document, DocumentListener> hasDocumentListener;
+    public static HashMap<Document, Notification> notificationOpen;
     /**
      * This would be invoked when a new project is started
      */
@@ -26,6 +27,9 @@ public class ProjectInitializer implements ProjectComponent {
         //I couldn't think of anything else but making the variable static which means there will be 1 hasDocuementListener for multiple open projects, so we have to act accordingly
         if(hasDocumentListener==null) {
             hasDocumentListener = new HashMap<Document, DocumentListener>();
+        }
+        if(notificationOpen==null) {
+            notificationOpen = new HashMap<Document, Notification>();
         }
         //This class helps with tracking the editors in the project
         EditorFactory editorFactory = EditorFactory.getInstance();
@@ -42,14 +46,19 @@ public class ProjectInitializer implements ProjectComponent {
                     //if it's not a .py file, we're not interested in tracking its changes. If it already has a listener, we don't want to add a second one, as that will lead to double logging
                     return;
                 }
-                NotificationGroup showYourWork = new NotificationGroup("Show Your Work", NotificationDisplayType.STICKY_BALLOON, true);
-                Notification notification = showYourWork.createNotification("Start Logging Edits for file" + file.getName(), NotificationType.INFORMATION);
+                //Creating a notification to remind the user to start logging activity
+                //Documentation: https://github.com/JetBrains/intellij-community/blob/306d705e1829bd3c74afc2489bfb7ed59d686b84/platform/platform-api/src/com/intellij/notification/NotificationGroup.java
+                NotificationGroup showYourWork = new NotificationGroup("Show Your Work", NotificationDisplayType.STICKY_BALLOON, false);
+                //Documentation: https://github.com/JetBrains/intellij-community/blob/306d705e1829bd3c74afc2489bfb7ed59d686b84/platform/platform-api/src/com/intellij/notification/Notification.java
+                Notification notification = showYourWork.createNotification("Start Logging Edits for file " + file.getName() + "?", NotificationType.INFORMATION);
+                notificationOpen.put(document, notification);
                 notification.addAction(new NotificationAction("Start") {
                     @Override
                     public void actionPerformed(@NotNull AnActionEvent e, @NotNull Notification notification) {
+                        //when the start button is pressed, remove notification and also its place in the notificationOpen map
                         notification.expire();
+                        notificationOpen.remove(document);
                         //this is the same as the trackerLog.java class
-
                         //The file ends with .py and has no listener, so we are going to add a listener to it
                         String logFilePath = file.getCanonicalPath().replace(".py", ".csv");
                         //get the path for the currently viewing tab, and then feed that, along with the original file into the diff generator to see if there's any discrepancy, and correct the log accordingly
@@ -74,6 +83,11 @@ public class ProjectInitializer implements ProjectComponent {
                 if (hasDocumentListener.containsKey(TabClosed)){
                     TabClosed.removeDocumentListener(hasDocumentListener.get(TabClosed));
                     hasDocumentListener.remove(TabClosed);
+                }
+                if (notificationOpen.containsKey(TabClosed)){
+                    //if there's a notification open, when the tab is closed, it should be removed
+                    ProjectInitializer.notificationOpen.get(TabClosed).expire();
+                    ProjectInitializer.notificationOpen.remove(TabClosed);
                 }
             }
         }, new Disposable() {

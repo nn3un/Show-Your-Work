@@ -34,9 +34,10 @@ public class TrackerLog extends AnAction {
         Editor editor = (Editor) anActionEvent.getRequiredData(CommonDataKeys.EDITOR);
         Document document = editor.getDocument();
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-        if (!file.getName().endsWith(".py") || ProjectInitializer.hasDocumentListener.containsKey(document)) {
-            //if it's not a .py file, we're not interested in tracking its changes. If it already has a listener, we don't want to add a second one, as that will lead to double logging
-            return;
+        if (ProjectInitializer.notificationOpen.containsKey(document)){
+            //if there's a notification open it should be removed
+            ProjectInitializer.notificationOpen.get(document).expire();
+            ProjectInitializer.notificationOpen.remove(document);
         }
         //The file ends with .py and has no listener, so we are going to add a listener to it
         String logFilePath = file.getCanonicalPath().replace(".py", ".csv");
@@ -59,15 +60,15 @@ public class TrackerLog extends AnAction {
     public void update(AnActionEvent e) {
         Project project = (Project) e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor) e.getData(CommonDataKeys.EDITOR);
-        //The button should be on if the there's a project and an editor tab open
         Document document = editor.getDocument();
-        VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-        if (!file.getName().endsWith(".py") || ProjectInitializer.hasDocumentListener.containsKey(document)) {
-            //if it's not a .py file, we're not interested in tracking its changes. If it already has a listener, we don't want to add a second one, as that will lead to double logging
-            e.getPresentation().setVisible(false);
+        if (project!= null && editor!=null){
+            VirtualFile file = FileDocumentManager.getInstance().getFile(document);
+            if (file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {
+                //The button would be available only when there is no listener in the document already and when it's a .py file
+                e.getPresentation().setVisible(true);
+                return;
+            }
         }
-        else {
-            e.getPresentation().setVisible(project != null && editor != null);
-        }
+        e.getPresentation().setVisible(false);
     }
 }
