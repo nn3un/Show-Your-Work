@@ -9,7 +9,7 @@
 - [ ] Test ProjectInitializor
 - [ ] Test scanner
 - [ ] Test Generate Zip 
-- [ ] Create some sort of reminder every time a new tab is opened, so user can remember to start the log<\br>
+- [ ] Create some sort of reminder every time a new tab is opened, so user can remember to start the log (the notify branch has a floppy implementation of this)<\br>
 
 * Animator
 - [ ] Build it

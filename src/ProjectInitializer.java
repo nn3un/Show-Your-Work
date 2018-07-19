@@ -78,7 +78,7 @@ public class ProjectInitializer implements ProjectComponent {
              * Is evoked after a tab is closed.
              */
             public void editorReleased(@NotNull EditorFactoryEvent editorFactoryEvent) {
-                //When a tab is closed, we want to remove its documentListener as well as remove it from hasDocumentListener
+                //When a tab is closed, we want to remove its documentListener as well as remove it from the map hasDocumentListener
                 Document TabClosed = editorFactoryEvent.getEditor().getDocument();
                 if (hasDocumentListener.containsKey(TabClosed)){
                     TabClosed.removeDocumentListener(hasDocumentListener.get(TabClosed));
