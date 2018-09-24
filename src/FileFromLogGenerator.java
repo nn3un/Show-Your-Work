@@ -18,10 +18,10 @@ public class FileFromLogGenerator extends AnAction {
      */
     @Override
     public void actionPerformed(AnActionEvent e) {
-        //Get the log file from the event, and using that get the version of the original it corresponds to using the helper scanner class
+        //Get the log file from the event, and using that get the version of the original it corresponds to using the helper CSVFileReader class
         //Todo Use regex to replace .py with .csv
         String logFilePath = ((VirtualFile)e.getData(PlatformDataKeys.VIRTUAL_FILE)).getCanonicalPath().replace(".py", ".csv");
-        String logVersionText = scanner.generateFileFromCsv(logFilePath);
+        String logVersionText = CSVFileReader.generateFileFromCsv(logFilePath);
         try {
             //Create the file which contains the log generated version of the original. If the original log was called test.csv, this will be called "test_currentLogVersion.txt"
             File currentLogVersion = new File(logFilePath.replace(".csv", "_currentLogVersion.txt"));

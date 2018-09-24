@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.Scanner;
 
-public class scanner {
+public class CSVFileReader {
     /**
      * Helper method that generates a version of the original from the current log file
      * @param csvFilePath Path of the log file
@@ -22,6 +22,7 @@ public class scanner {
 			scanner.useDelimiter(",");
 			while (scanner.hasNext()) {
 			    //Get the necessary information from the csv file
+				Long ms = Long.parseLong(scanner.next());
 				String type = scanner.next();
                 int offset = Integer.parseInt(scanner.next());
                 String toChange = scanner.next();
