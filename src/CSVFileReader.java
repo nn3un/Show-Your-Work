@@ -1,7 +1,9 @@
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.FileReader;
 import java.util.Scanner;
 
 public class CSVFileReader {
@@ -12,41 +14,32 @@ public class CSVFileReader {
      */
 	public static String generateFileFromCsv(String csvFilePath)
 	{
-	    String content = " ";
+	    StringBuilder content = new StringBuilder();
+	    content.append(" ");
 		try {
-		    File csvfile= new File(csvFilePath);
-		    if (!csvfile.exists()){
-		        csvfile.createNewFile();
-            }
-			Scanner scanner = new Scanner(csvfile);
-			scanner.useDelimiter(",");
-			while (scanner.hasNext()) {
-			    //Get the necessary information from the csv file
-				Long ms = Long.parseLong(scanner.next());
-				String type = scanner.next();
-                int offset = Integer.parseInt(scanner.next());
-                String toChange = scanner.next();
-                toChange = toChange.replace('`', ',');
-                //If the type is add get the portion of the string starting from index 0 to offset add the new string, and then add the leftover
+			File csvData = new File(csvFilePath);
+			//CSVParser to parse the csvfile (https://commons.apache.org/proper/commons-csv/apidocs/index.html)
+			CSVParser parser = CSVParser.parse(new FileReader(csvData), CSVFormat.DEFAULT);
+			for (CSVRecord csvRecord : parser) {
+				Long ms = Long.parseLong(csvRecord.get(0));
+				String type = csvRecord.get(1);
+				int offset = Integer.parseInt(csvRecord.get(2));
+				String toChange = csvRecord.get(3);
+				//If the type is add get the portion of the string starting from index 0 to offset add the new string, and then add the leftover
 				if (type.equals("add")) {
-                    content = content.substring(0, offset) + toChange + content.substring(offset);
+					content.insert(offset, toChange);
 				}
 				//If the type is sub then just skip over the portion of the string by manipulating index
 				else if (type.equals("sub")) {
-					content = content.substring(0, offset) + content.substring(offset + toChange.length());
-				}
-				//move cursor to next line
-				if (scanner.hasNext()) {
-					scanner.nextLine();
+					//TODO: If memory becomes an issue, consider only saving the length of the substring when the type is "sub" since the actual deleted string is useless
+					content.delete(offset, offset+toChange.length());
 				}
 			}
-			scanner.close();
-
 		}
 		catch (Exception e) {
 		    //Todo: Better Error Handling
 			e.printStackTrace();
 		}
-        return content;
+        return content.toString();
 	}
 }
