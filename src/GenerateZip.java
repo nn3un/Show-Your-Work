@@ -17,7 +17,6 @@ public class GenerateZip extends AnAction {
     /**This method allows us to zip up the files
      * @param e Occurs when "Generate Zip for Submission" is pressed
      */
-    //Todo: Allow the action only if there already exists a CSV file and .py file to work with
     public void actionPerformed(AnActionEvent e) {
         //Get the file path and file name of the file associated with the currently active tab
         String path = ((VirtualFile)e.getData(PlatformDataKeys.VIRTUAL_FILE)).getCanonicalPath();
@@ -26,18 +25,15 @@ public class GenerateZip extends AnAction {
             int BUFFER = 2048;
             BufferedInputStream origin = null;
             //This is the new zip folder, if the original is called "test.py" the zip file would be located in the same directory and would be called "test_log.zip")
-            //Todo: Use regex to replace .py with _log.zip
-            FileOutputStream dest = new FileOutputStream(path.replace(".py", "_log.zip"));
+            FileOutputStream dest = new FileOutputStream(path.substring(0, path.length()-3) + "_log.zip");
             ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
 
             int count;
             //This creates a copy of the csv file for the zip file
             byte[] data_byte = new byte[BUFFER];
-            //Todo: Use regex to replace .py with .csv
-            FileInputStream fi = new FileInputStream(path.replace(".py", ".csv"));
+            FileInputStream fi = new FileInputStream(path.substring(0, path.length()-2) + "csv");
             origin = new BufferedInputStream(fi, BUFFER);
-            //Todo: Use regex to replace .py with .csv
-            ZipEntry csv_entry = new ZipEntry(fileName.replace(".py", ".csv"));
+            ZipEntry csv_entry = new ZipEntry(fileName.substring(0, fileName.length()-2) + "csv");
             out.putNextEntry(csv_entry);
             while((count = origin.read(data_byte, 0, BUFFER)) != -1) {
                 out.write(data_byte, 0, count);
@@ -72,8 +68,8 @@ public class GenerateZip extends AnAction {
         if (project!= null && editor!= null){
             VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
             if (file.getName().endsWith(".py")){
-                //Todo Use regex to replace
-                File logFile = new File(file.getCanonicalPath().replace(".py", ".csv"));
+                String path = file.getCanonicalPath();
+                File logFile = new File(path.substring(0, path.length()-2) + "csv");
                 if (logFile.exists()){
                     //The button should be active when there's a .py file involved and there's already a log file
                     e.getPresentation().setVisible(true);

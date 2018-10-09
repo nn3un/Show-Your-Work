@@ -34,6 +34,7 @@ public class diffGenerator {
                 offset += d.text.length();
             }
             //If the original file is missing something the log version of the file has,we have to add that to the csv log as a sub. No need to move the caret
+            //TODO: If memory becomes an issue, consider only saving the length of the substring when the type is "sub" since the actual deleted string is useless
             else {
                 CSVFileWriter.appendToCsv(CSVFilePath, System.currentTimeMillis(),"sub", offset, d.text);
             }

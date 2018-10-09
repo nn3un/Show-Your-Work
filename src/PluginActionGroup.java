@@ -5,7 +5,7 @@ import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.editor.Editor;
 
 //This is the class that creates a group for the actions in the VCS tab under the name -"Show Your Work Plugin".
-public class DocumentActionLogger extends DefaultActionGroup {
+public class PluginActionGroup extends DefaultActionGroup {
     /**
      * Decides the visibility for the button "Show Your Work Plugin Tools"
      * @param event

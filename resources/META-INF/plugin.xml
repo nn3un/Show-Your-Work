@@ -34,7 +34,7 @@
     </extensions>
 
     <actions>
-        <group id="Document Event Log" class="DocumentActionLogger" popup="true"
+        <group id="Document Event Log" class="PluginActionGroup" popup="true"
                text="Show Your Work Plugin Tools" description="The group that houses the different plugin actions, located in Local history">
             <add-to-group group-id="VcsGroups" anchor="first"/>
             <action id="DocumentEvent" class="TrackerLog" text="Start Logging Edits" description="Logs the different editor actions ">

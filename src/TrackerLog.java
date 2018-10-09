@@ -40,19 +40,19 @@ public class TrackerLog extends AnAction {
             ProjectInitializer.notificationOpen.remove(document);
         }
         //The file ends with .py and has no listener, so we are going to add a listener to it
-        String logFilePath = file.getCanonicalPath().replace(".py", ".csv");
+        String originalPath = file.getCanonicalPath();
+        String logFilePath = originalPath.substring(0, originalPath.length()-2) + "csv";
         //get the path for the currently viewing tab, and then feed that, along with the original file into the diff generator to see if there's any discrepancy, and correct the log accordingly
         diffGenerator.updateLog(logFilePath, document.getText());
         //add a document listener to the currently active tab
-        String path = file.getCanonicalPath();
-        DocumentListenerImpl documentListener = new DocumentListenerImpl(path);
+        DocumentListenerImpl documentListener = new DocumentListenerImpl(originalPath);
         document.addDocumentListener(documentListener);
         //Since we just added a listener, it should be included in the map hasDocumentListener
         ProjectInitializer.hasDocumentListener.put(document, documentListener);
     }
 
     /**
-     * Updates the view of the plugin button
+     * Updates the view of the 'Start logging edit' option
      *
      * @param e The button press for "Start Logging Edit"
      */

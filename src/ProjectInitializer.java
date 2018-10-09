@@ -24,7 +24,7 @@ public class ProjectInitializer implements ProjectComponent {
      */
     public void initComponent(){
         //Todo come up with better way to prevent multiple document listener for one file
-        //I couldn't think of anything else but making the variable static which means there will be 1 hasDocuementListener for multiple open projects, so we have to act accordingly
+        //I couldn't think of anything else but making the variable static which means there can be 1 hasDocuementListener for multiple open projects, so we have to act accordingly
         if(hasDocumentListener==null) {
             hasDocumentListener = new HashMap<Document, DocumentListener>();
         }
@@ -54,17 +54,22 @@ public class ProjectInitializer implements ProjectComponent {
                 notificationOpen.put(document, notification);
                 notification.addAction(new NotificationAction("Start") {
                     @Override
+                    /**
+                     * What is done if the user presses the start on the notification
+                     * @param e the event of clicking start on the notification button
+                     * @param notification the notification being clicked on
+                     */
                     public void actionPerformed(@NotNull AnActionEvent e, @NotNull Notification notification) {
                         //when the start button is pressed, remove notification and also its place in the notificationOpen map
                         notification.expire();
                         notificationOpen.remove(document);
                         //this is the same as the trackerLog.java class
                         //The file ends with .py and has no listener, so we are going to add a listener to it
-                        String logFilePath = file.getCanonicalPath().replace(".py", ".csv");
+                        String path = file.getCanonicalPath();
+                        String logFilePath = path.substring(0, path.length()-2) + "csv";
                         //get the path for the currently viewing tab, and then feed that, along with the original file into the diff generator to see if there's any discrepancy, and correct the log accordingly
                         diffGenerator.updateLog(logFilePath, document.getText());
                         //add a document listener to the currently active tab
-                        String path = file.getCanonicalPath();
                         DocumentListenerImpl documentListener = new DocumentListenerImpl(path);
                         document.addDocumentListener(documentListener);
                         //Since we just added a listener, it should be included in the map hasDocumentListener
@@ -90,12 +95,8 @@ public class ProjectInitializer implements ProjectComponent {
                     ProjectInitializer.notificationOpen.remove(TabClosed);
                 }
             }
-        }, new Disposable() {
-            @Override
-            //Todo Figure out what this should do
-            public void dispose() {
+        }, () -> {
 
-            }
         });
 
     }

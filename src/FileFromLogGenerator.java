@@ -19,12 +19,12 @@ public class FileFromLogGenerator extends AnAction {
     @Override
     public void actionPerformed(AnActionEvent e) {
         //Get the log file from the event, and using that get the version of the original it corresponds to using the helper CSVFileReader class
-        //Todo Use regex to replace .py with .csv
-        String logFilePath = ((VirtualFile)e.getData(PlatformDataKeys.VIRTUAL_FILE)).getCanonicalPath().replace(".py", ".csv");
+        String path = ((VirtualFile)e.getData(PlatformDataKeys.VIRTUAL_FILE)).getCanonicalPath();
+        String logFilePath = path.substring(0, path.length()-2) + "csv";
         String logVersionText = CSVFileReader.generateFileFromCsv(logFilePath);
         try {
             //Create the file which contains the log generated version of the original. If the original log was called test.csv, this will be called "test_currentLogVersion.txt"
-            File currentLogVersion = new File(logFilePath.replace(".csv", "_currentLogVersion.txt"));
+            File currentLogVersion = new File(logFilePath.substring(0, logFilePath.length()-3) + "_currentLogVersion.txt");
             //We don't want to append to the old txt file, so we're deleting it.
             if (currentLogVersion.exists()){
                 currentLogVersion.delete();
@@ -49,8 +49,8 @@ public class FileFromLogGenerator extends AnAction {
         if (project!= null && editor!= null){
             VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
             if (file.getName().endsWith(".py")){
-                //Todo Use regex to replace
-                File logFile = new File(file.getCanonicalPath().replace(".py", ".csv"));
+                String path = file.getCanonicalPath();
+                File logFile = new File(path.substring(0, path.length()-2) + "csv");
                 if (logFile.exists()){
                     //The button should be active when there's a .py file involved and there's already a log file
                     e.getPresentation().setVisible(true);
