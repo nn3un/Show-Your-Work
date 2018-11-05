@@ -3,6 +3,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.EditorKind;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.log4j.LogManager;
@@ -80,7 +81,7 @@ public class GenerateZip extends AnAction {
     public void update(AnActionEvent e) {
         Project project = (Project)e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor)e.getData(CommonDataKeys.EDITOR);
-        if (project!= null && editor!= null){
+        if (project!= null && editor!= null && editor.getEditorKind().equals(EditorKind.UNTYPED)){
             VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
             if (file != null && file.getName().endsWith(".py")){
                 String path = file.getCanonicalPath();

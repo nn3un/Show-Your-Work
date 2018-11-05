@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.EditorKind;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
@@ -75,7 +76,7 @@ public class TrackerLog extends AnAction {
     public void update(AnActionEvent e) {
         Project project = (Project) e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor) e.getData(CommonDataKeys.EDITOR);
-        if (project!= null && editor!=null && ProjectInitializer.hasDocumentListener != null){
+        if (project!= null && editor!=null && editor.getEditorKind().equals(EditorKind.UNTYPED) && ProjectInitializer.hasDocumentListener != null){
             Document document = editor.getDocument();
             VirtualFile file = FileDocumentManager.getInstance().getFile(document);
             if (file != null && file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {

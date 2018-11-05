@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="14628854-71b7-4d02-abcd-8b9fc567dccb" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Show Your Work.zip" beforeDir="false" afterPath="$PROJECT_DIR$/Show Your Work.zip" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/CSVFileReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/CSVFileReader.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/CSVFileWriter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/CSVFileWriter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/DocumentListenerImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/DocumentListenerImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/FileFromLogGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/FileFromLogGenerator.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/GenerateZip.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/GenerateZip.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/PluginActionGroup.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/PluginActionGroup.class" afterDir="false" />
@@ -14,15 +12,11 @@
       <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/ProjectInitializer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/ProjectInitializer$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/ProjectInitializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/ProjectInitializer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/TrackerLog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/TrackerLog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Show Your Work/diffGenerator.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Show Your Work/diffGenerator.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSVFileReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSVFileReader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CSVFileWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/CSVFileWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DocumentListenerImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/DocumentListenerImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/FileFromLogGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/FileFromLogGenerator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GenerateZip.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GenerateZip.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PluginActionGroup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PluginActionGroup.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ProjectInitializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ProjectInitializer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TrackerLog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/TrackerLog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/diffGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/diffGenerator.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,13 +42,13 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="17" />
-          <entry key="java" value="2541" />
+          <entry key="java" value="2939" />
           <entry key="md" value="161" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="2541" />
+          <entry key="JAVA" value="2939" />
           <entry key="PLAIN_TEXT" value="178" />
         </counts>
       </usages-collector>
@@ -84,8 +78,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GenerateZip.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="29" column="56" selection-start-line="29" selection-start-column="56" selection-end-line="29" selection-end-column="56" />
+            <state relative-caret-position="138">
+              <caret line="83" column="95" selection-start-line="83" selection-start-column="95" selection-end-line="83" selection-end-column="95" />
             </state>
           </provider>
         </entry>
@@ -93,8 +87,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/FileFromLogGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-400">
-              <caret line="55" column="75" selection-start-line="55" selection-start-column="75" selection-end-line="55" selection-end-column="75" />
+            <state relative-caret-position="186">
+              <caret line="68" column="95" selection-start-line="68" selection-start-column="95" selection-end-line="68" selection-end-column="95" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -105,16 +99,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PluginActionGroup.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="13" column="61" lean-forward="true" selection-start-line="13" selection-start-column="61" selection-end-line="13" selection-end-column="61" />
+            <state relative-caret-position="260">
+              <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CSVFileReader.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-106">
+            <state relative-caret-position="-322">
               <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -126,17 +120,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/diff_match_patch.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="26">
-              <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+            <state>
+              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/ProjectInitializer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-806">
-              <caret line="53" column="27" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
+            <state relative-caret-position="191">
+              <caret line="97" column="72" lean-forward="true" selection-start-line="97" selection-start-column="72" selection-end-line="97" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -147,8 +141,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/CSVFileWriter.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="78">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state relative-caret-position="208">
+              <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -156,7 +150,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/diffGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="546">
+            <state relative-caret-position="314">
               <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
             </state>
           </provider>
@@ -165,8 +159,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/TrackerLog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="521">
-              <caret line="78" column="53" lean-forward="true" selection-start-line="78" selection-start-column="53" selection-end-line="78" selection-end-column="53" />
+            <state relative-caret-position="292">
+              <caret line="83" column="52" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
             </state>
           </provider>
         </entry>
@@ -214,12 +208,12 @@
         <option value="$PROJECT_DIR$/src/CSVFileReader.java" />
         <option value="$PROJECT_DIR$/src/CSVFileWriter.java" />
         <option value="$PROJECT_DIR$/src/DocumentListenerImpl.java" />
-        <option value="$PROJECT_DIR$/src/TrackerLog.java" />
         <option value="$PROJECT_DIR$/src/diffGenerator.java" />
-        <option value="$PROJECT_DIR$/src/FileFromLogGenerator.java" />
-        <option value="$PROJECT_DIR$/src/GenerateZip.java" />
-        <option value="$PROJECT_DIR$/src/ProjectInitializer.java" />
         <option value="$PROJECT_DIR$/src/PluginActionGroup.java" />
+        <option value="$PROJECT_DIR$/src/TrackerLog.java" />
+        <option value="$PROJECT_DIR$/src/GenerateZip.java" />
+        <option value="$PROJECT_DIR$/src/FileFromLogGenerator.java" />
+        <option value="$PROJECT_DIR$/src/ProjectInitializer.java" />
       </list>
     </option>
   </component>
@@ -281,10 +275,10 @@
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1541160122646" />
     <property name="jdk.selected.JAVA_MODULE" value="1.8" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2902299" />
-    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -374,7 +368,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.19241774" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4989154" visible="true" weight="0.19241774" />
       <window_info id="Structure" order="1" sideWeight="0.5010846" side_tool="true" weight="0.18597998" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -384,13 +378,13 @@
       <window_info id="Learn" order="7" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32771084" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49499285" visible="true" weight="0.3253012" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49427754" visible="true" weight="0.3253012" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.3985849" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49713877" weight="0.32894737" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49785408" weight="0.32748538" />
-      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50500715" side_tool="true" weight="0.3260234" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49785408" weight="0.32650602" />
+      <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.50572246" side_tool="true" weight="0.3253012" />
       <window_info anchor="bottom" id="Version Control" order="9" sideWeight="0.49785408" weight="0.32748538" />
       <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49928468" weight="0.32894737" />
       <window_info anchor="bottom" id="Tail" order="11" />
@@ -536,27 +530,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GenerateZip.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="29" column="56" selection-start-line="29" selection-start-column="56" selection-end-line="29" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CSVFileWriter.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="78">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/diffGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="546">
-          <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DocumentListenerImpl.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="624">
@@ -564,10 +537,38 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/ProjectInitializer.java">
+    <entry file="file://$PROJECT_DIR$/src/diff_match_patch.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-806">
-          <caret line="53" column="27" selection-start-line="53" selection-start-column="27" selection-end-line="53" selection-end-column="27" />
+        <state>
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CSVFileWriter.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="14" column="34" selection-start-line="14" selection-start-column="34" selection-end-line="14" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/diffGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="28" column="62" selection-start-line="28" selection-start-column="62" selection-end-line="28" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PluginActionGroup.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="15" column="27" lean-forward="true" selection-start-line="15" selection-start-column="27" selection-end-line="15" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CSVFileReader.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-322">
+          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -576,39 +577,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/TrackerLog.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="521">
-          <caret line="78" column="53" lean-forward="true" selection-start-line="78" selection-start-column="53" selection-end-line="78" selection-end-column="53" />
+        <state relative-caret-position="292">
+          <caret line="83" column="52" selection-start-line="83" selection-start-column="52" selection-end-line="83" selection-end-column="52" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/diff_match_patch.java">
+    <entry file="file://$PROJECT_DIR$/src/GenerateZip.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="26">
-          <caret line="33" column="7" selection-start-line="33" selection-start-column="7" selection-end-line="33" selection-end-column="7" />
+        <state relative-caret-position="138">
+          <caret line="83" column="95" selection-start-line="83" selection-start-column="95" selection-end-line="83" selection-end-column="95" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FileFromLogGenerator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-400">
-          <caret line="55" column="75" selection-start-line="55" selection-start-column="75" selection-end-line="55" selection-end-column="75" />
+        <state relative-caret-position="186">
+          <caret line="68" column="95" selection-start-line="68" selection-start-column="95" selection-end-line="68" selection-end-column="95" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PluginActionGroup.java">
+    <entry file="file://$PROJECT_DIR$/src/ProjectInitializer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="13" column="61" lean-forward="true" selection-start-line="13" selection-start-column="61" selection-end-line="13" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CSVFileReader.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-106">
-          <caret line="15" column="28" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
+        <state relative-caret-position="191">
+          <caret line="97" column="72" lean-forward="true" selection-start-line="97" selection-start-column="72" selection-end-line="97" selection-end-column="72" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -659,7 +653,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.25776756" />
+                <option value="0.2902299" />
               </list>
             </option>
           </splitter-proportions>
@@ -672,7 +666,6 @@
             <option name="proportions">
               <list>
                 <option value="0.2902299" />
-                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>

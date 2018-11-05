@@ -5,6 +5,7 @@ import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
+import com.intellij.openapi.editor.EditorKind;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.openapi.editor.event.EditorFactoryEvent;
 import com.intellij.openapi.editor.event.EditorFactoryListener;
@@ -46,11 +47,15 @@ public class ProjectInitializer implements ProjectComponent {
             //Will be evoked after a tab is created
             public void editorCreated(@NotNull EditorFactoryEvent editorFactoryEvent) {
                 Editor editor = editorFactoryEvent.getEditor();
+                if (!editor.getEditorKind().equals(EditorKind.UNTYPED)) {
+                    //There are different kind of editors in Intellij, we only want to track edits that happen in the UNTYPED one
+                    return;
+                }
                 Document document = editor.getDocument();
                 VirtualFile file = FileDocumentManager.getInstance().getFile(document);
                 if (file == null || !file.getName().endsWith(".py") || ProjectInitializer.hasDocumentListener.containsKey(document) || ProjectInitializer.notificationOpen.containsKey(document)) {
                     //if it's not a .py file, we're not interested in tracking its changes. If it already has a listener or a notification, we don't want to add a second one, as that will lead to double logging
-                    logger.error("The file correct file doesn't exist, or it's somehow already in one of the maps");
+                    logger.info("The file correct file doesn't exist, or it's somehow already in one of the maps");
                     return;
                 }
                 //Creating a notification to remind the user to start logging activity
@@ -88,6 +93,11 @@ public class ProjectInitializer implements ProjectComponent {
             @Override
             //Will be invoked after a tab is closed
             public void editorReleased(@NotNull EditorFactoryEvent editorFactoryEvent) {
+                Editor editor = editorFactoryEvent.getEditor();
+                //If it's not the proper kind of editor, we don't care about what its listeners
+                if (!editor.getEditorKind().equals(EditorKind.UNTYPED)){
+                    return;
+                }
                 //When a tab is closed, we want to remove its documentListener as well as remove it from hasDocumentListener
                 Document TabClosed = editorFactoryEvent.getEditor().getDocument();
                 if (hasDocumentListener.containsKey(TabClosed)){
