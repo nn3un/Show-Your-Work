@@ -7,7 +7,7 @@ import java.io.IOException;
 //helper class to construct a DocumentListener for logging actions
 public class DocumentListenerImpl implements DocumentListener {
     private String path;
-    public DocumentListenerImpl(String path){
+    DocumentListenerImpl(String path){
         this.path = path;
     }
     public void documentChanged(DocumentEvent event){
@@ -18,7 +18,6 @@ public class DocumentListenerImpl implements DocumentListener {
                 CSVFileWriter.appendToCsv(path.substring(0, path.length()-2)+"csv", System.currentTimeMillis(), "add", event.getOffset(), "" + event.getNewFragment());
             }
             catch (IOException exception) {
-                //TODO: Better Error Handling
                 exception.printStackTrace();
             }
         }
@@ -30,7 +29,6 @@ public class DocumentListenerImpl implements DocumentListener {
             try {
                 CSVFileWriter.appendToCsv(path.substring(0, path.length()-2)+"csv", System.currentTimeMillis(), "sub", event.getOffset(), "" + event.getOldFragment());
             } catch (IOException exception) {
-                //TODO: Better Error Handling
                 exception.printStackTrace();
             }
         }

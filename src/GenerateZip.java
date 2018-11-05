@@ -5,6 +5,9 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -13,14 +16,26 @@ import java.io.FileOutputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
+import static java.lang.System.exit;
+
 public class GenerateZip extends AnAction {
+    private Logger logger = LogManager.getLogger("GenerateZip");
     /**This method allows us to zip up the files
      * @param e Occurs when "Generate Zip for Submission" is pressed
      */
     public void actionPerformed(AnActionEvent e) {
         //Get the file path and file name of the file associated with the currently active tab
-        String path = ((VirtualFile)e.getData(PlatformDataKeys.VIRTUAL_FILE)).getCanonicalPath();
-        String fileName = ((VirtualFile)e.getData(PlatformDataKeys.VIRTUAL_FILE)).getName();
+        VirtualFile vf = (VirtualFile)e.getData(PlatformDataKeys.VIRTUAL_FILE);
+        if (vf == null){
+            logger.error("Virtual file does not exist");
+            return;
+        }
+        String path = vf.getCanonicalPath();
+        if (path == null || !path.endsWith(".py")){
+            logger.error("Correct path doesn't exist");
+            return;
+        }
+        String fileName = vf.getName();
         try {
             int BUFFER = 2048;
             BufferedInputStream origin = null;
@@ -67,13 +82,15 @@ public class GenerateZip extends AnAction {
         Editor editor = (Editor)e.getData(CommonDataKeys.EDITOR);
         if (project!= null && editor!= null){
             VirtualFile file = e.getData(PlatformDataKeys.VIRTUAL_FILE);
-            if (file.getName().endsWith(".py")){
+            if (file != null && file.getName().endsWith(".py")){
                 String path = file.getCanonicalPath();
-                File logFile = new File(path.substring(0, path.length()-2) + "csv");
-                if (logFile.exists()){
-                    //The button should be active when there's a .py file involved and there's already a log file
-                    e.getPresentation().setVisible(true);
-                    return;
+                if(path != null) {
+                    File logFile = new File(path.substring(0, path.length() - 2) + "csv");
+                    if (logFile.exists()) {
+                        //The button should be active when there's a .py file involved and there's already a log file
+                        e.getPresentation().setVisible(true);
+                        return;
+                    }
                 }
             }
         }

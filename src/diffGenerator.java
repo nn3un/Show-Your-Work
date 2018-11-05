@@ -1,14 +1,22 @@
 
+import jdk.nashorn.internal.runtime.ErrorManager;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
+
 import java.io.*;
 import java.util.LinkedList;
 
-public class diffGenerator {
+import static java.lang.System.exit;
+
+class diffGenerator {
+    private static Logger logger = LogManager.getLogger("diffGenerator");
+
     /**
      * Helper class method that updates the log file to remove discrepancies with the original
      * @param CSVFilePath The path for the log file
      * @param originalFileContent The contents of the original .py file
      */
-    public static void updateLog(String CSVFilePath, String originalFileContent){
+    static void updateLog(String CSVFilePath, String originalFileContent){
         //Use the CSVFileReader class to replicate the original from the CSV
         String logVersionOfFile = CSVFileReader.generateFileFromCsv(CSVFilePath);
         //Get a list of the differences using diff-match-patch
@@ -17,7 +25,10 @@ public class diffGenerator {
         try {
         File logFile = new File(CSVFilePath);
         if (!logFile.exists()) {
-            logFile.createNewFile();
+            if(!logFile.createNewFile()){
+                logger.error("Failed to create new CSV file");
+                return;
+            };
         }
         FileWriter fw = new FileWriter(logFile.getAbsoluteFile(), true);
         BufferedWriter bw = new BufferedWriter(fw);
