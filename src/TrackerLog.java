@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.EditorKind;
 import com.intellij.openapi.editor.actionSystem.EditorAction;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
@@ -21,37 +22,53 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.logging.Log;
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 
+import static java.lang.System.exit;
+
 public class TrackerLog extends AnAction {
+    private Logger logger = LogManager.getLogger("TrackerLog");
     /**
      * Allows the logging activity of a document
      *
      * @param anActionEvent Occurs when the 'Start logging edit' button is pressed
      */
-    public void actionPerformed(@NotNull final AnActionEvent anActionEvent) {
+    public void actionPerformed(@NotNull final AnActionEvent anActionEvent){
         //Get the editor for the current document tab, and from that get the document
         Editor editor = (Editor) anActionEvent.getRequiredData(CommonDataKeys.EDITOR);
         Document document = editor.getDocument();
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-        if (!file.getName().endsWith(".py") || ProjectInitializer.hasDocumentListener.containsKey(document)) {
-            //if it's not a .py file, we're not interested in tracking its changes. If it already has a listener, we don't want to add a second one, as that will lead to double logging
+        if(file == null){
+            logger.error("The virtual file doesn't exist");
             return;
         }
+        if (ProjectInitializer.notificationOpen.containsKey(document)){
+            //if there's a notification open it should be removed
+            ProjectInitializer.notificationOpen.get(document).expire();
+            ProjectInitializer.notificationOpen.remove(document);
+        }
         //The file ends with .py and has no listener, so we are going to add a listener to it
-        String logFilePath = file.getCanonicalPath().replace(".py", ".csv");
+        String originalPath = file.getCanonicalPath();
+        if (originalPath == null || !originalPath.endsWith(".py")){
+            logger.error("The virtual file doesn't exist");
+            return;
+        }
+        String logFilePath = originalPath.substring(0, originalPath.length()-2) + "csv";
         //get the path for the currently viewing tab, and then feed that, along with the original file into the diff generator to see if there's any discrepancy, and correct the log accordingly
         diffGenerator.updateLog(logFilePath, document.getText());
         //add a document listener to the currently active tab
-        String path = file.getCanonicalPath();
-        DocumentListenerImpl documentListener = new DocumentListenerImpl(path);
+        DocumentListenerImpl documentListener = new DocumentListenerImpl(originalPath);
         document.addDocumentListener(documentListener);
         //Since we just added a listener, it should be included in the map hasDocumentListener
         ProjectInitializer.hasDocumentListener.put(document, documentListener);
     }
 
     /**
-     * Updates the view of the plugin button
+     * Updates the view of the 'Start logging edit' option
      *
      * @param e The button press for "Start Logging Edit"
      */
@@ -59,10 +76,10 @@ public class TrackerLog extends AnAction {
     public void update(AnActionEvent e) {
         Project project = (Project) e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor) e.getData(CommonDataKeys.EDITOR);
-        Document document = editor.getDocument();
-        if (project!= null && editor!=null){
+        if (project!= null && editor!=null && editor.getEditorKind().equals(EditorKind.UNTYPED) && ProjectInitializer.hasDocumentListener != null){
+            Document document = editor.getDocument();
             VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-            if (file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {
+            if (file != null && file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {
                 //The button would be available only when there is no listener in the document already and when it's a .py file
                 e.getPresentation().setVisible(true);
                 return;
