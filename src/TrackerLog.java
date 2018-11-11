@@ -1,34 +1,11 @@
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorKind;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
-import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.editor.event.DocumentListener;
+import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.editor.*;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import org.apache.commons.logging.Log;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-
-import static java.lang.System.exit;
 
 public class TrackerLog extends AnAction {
     private Logger logger = LogManager.getLogger("TrackerLog");
@@ -65,6 +42,14 @@ public class TrackerLog extends AnAction {
         document.addDocumentListener(documentListener);
         //Since we just added a listener, it should be included in the map hasDocumentListener
         ProjectInitializer.hasDocumentListener.put(document, documentListener);
+        //Get the action manager that will help with the copy paste logging
+        ActionManager actionManager = ActionManager.getInstance();
+        String CCPFilePath = originalPath.substring(0, originalPath.length()-2) + "copy_paste" + ".csv";
+        //Add the listener that will log copy-paste
+        CopyPasteListener copyPasteListener = new CopyPasteListener( editor.getSelectionModel(), editor.getCaretModel(), CCPFilePath, document);
+        actionManager.addAnActionListener(copyPasteListener);
+        //Add it to the hasCopyPasteListener map
+        ProjectInitializer.hasCopyPasteListener.put(document, copyPasteListener);
     }
 
     /**

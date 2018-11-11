@@ -1,5 +1,6 @@
 import com.intellij.notification.*;
 import com.intellij.openapi.Disposable;
+import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.editor.Document;
@@ -25,6 +26,7 @@ import static java.lang.System.exit;
 public class ProjectInitializer implements ProjectComponent {
     static HashMap<Document, DocumentListener> hasDocumentListener;
     static HashMap<Document, Notification> notificationOpen;
+    static HashMap<Document, CopyPasteListener> hasCopyPasteListener;
 
     /**
      * This would be invoked when a new project is started
@@ -39,6 +41,9 @@ public class ProjectInitializer implements ProjectComponent {
         }
         if(notificationOpen==null) {
             notificationOpen = new HashMap<Document, Notification>();
+        }
+        if(hasCopyPasteListener==null) {
+            hasCopyPasteListener = new HashMap<Document, CopyPasteListener>();
         }
         //This class helps with tracking the editors in the project
         EditorFactory editorFactory = EditorFactory.getInstance();
@@ -86,6 +91,13 @@ public class ProjectInitializer implements ProjectComponent {
                         document.addDocumentListener(documentListener);
                         //Since we just added a listener, it should be included in the map hasDocumentListener
                         ProjectInitializer.hasDocumentListener.put(document, documentListener);
+                        //Get the action manager that will help with the copy paste logging
+                        ActionManager actionManager = ActionManager.getInstance();
+                        String CCPFilePath = path.substring(0, path.length()-2) + "copy_paste" + ".csv";
+                        //Add the listener that will log copy-paste
+                        CopyPasteListener copyPasteListener = new CopyPasteListener( editor.getSelectionModel(), editor.getCaretModel(), CCPFilePath, document);
+                        actionManager.addAnActionListener(copyPasteListener);
+                        hasCopyPasteListener.put(document, copyPasteListener);
                     }
                 });
                 notification.notify(editor.getProject());
@@ -99,15 +111,19 @@ public class ProjectInitializer implements ProjectComponent {
                     return;
                 }
                 //When a tab is closed, we want to remove its documentListener as well as remove it from hasDocumentListener
-                Document TabClosed = editorFactoryEvent.getEditor().getDocument();
-                if (hasDocumentListener.containsKey(TabClosed)){
-                    TabClosed.removeDocumentListener(hasDocumentListener.get(TabClosed));
-                    hasDocumentListener.remove(TabClosed);
+                Document documentClosed = editorFactoryEvent.getEditor().getDocument();
+                if (hasDocumentListener.containsKey(documentClosed)){
+                    documentClosed.removeDocumentListener(hasDocumentListener.get(documentClosed));
+                    hasDocumentListener.remove(documentClosed);
                 }
-                if (notificationOpen.containsKey(TabClosed)){
+                if (notificationOpen.containsKey(documentClosed)){
                     //if there's a notification open, when the tab is closed, it should be removed
-                    ProjectInitializer.notificationOpen.get(TabClosed).expire();
-                    ProjectInitializer.notificationOpen.remove(TabClosed);
+                    ProjectInitializer.notificationOpen.get(documentClosed).expire();
+                    ProjectInitializer.notificationOpen.remove(documentClosed);
+                }
+                if (hasCopyPasteListener.containsKey(documentClosed)){
+                    ActionManager.getInstance().removeAnActionListener(hasCopyPasteListener.get(documentClosed));
+                    hasCopyPasteListener.remove(documentClosed);
                 }
             }
         }, () -> {

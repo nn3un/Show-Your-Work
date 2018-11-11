@@ -16,6 +16,11 @@ public class CSVFileReader {
 	    content.append(" ");
 		try {
 			File csvData = new File(csvFilePath);
+			if (!csvData.exists()){
+				if(!csvData.createNewFile()){
+					return "ERROR IN CREATING CSVFILE";
+				}
+			}
 			//CSVParser to parse the csvfile (https://commons.apache.org/proper/commons-csv/apidocs/index.html)
 			CSVParser parser = CSVParser.parse(new FileReader(csvData), CSVFormat.DEFAULT);
 			for (CSVRecord csvRecord : parser) {
