@@ -16,7 +16,7 @@ public class TrackerLog extends AnAction {
      */
     public void actionPerformed(@NotNull final AnActionEvent anActionEvent){
         //Get the editor for the current document tab, and from that get the document
-        Editor editor = (Editor) anActionEvent.getRequiredData(CommonDataKeys.EDITOR);
+        Editor editor = anActionEvent.getRequiredData(CommonDataKeys.EDITOR);
         Document document = editor.getDocument();
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
         if(file == null){
@@ -44,9 +44,9 @@ public class TrackerLog extends AnAction {
         ProjectInitializer.hasDocumentListener.put(document, documentListener);
         //Get the action manager that will help with the copy paste logging
         ActionManager actionManager = ActionManager.getInstance();
-        String CCPFilePath = originalPath.substring(0, originalPath.length()-2) + "copy_paste" + ".csv";
+        String CCPFilePath = originalPath.substring(0, originalPath.length()-2)+ "csv";
         //Add the listener that will log copy-paste
-        CopyPasteListener copyPasteListener = new CopyPasteListener( editor.getSelectionModel(), editor.getCaretModel(), CCPFilePath, document);
+        CopyPasteListener copyPasteListener = new CopyPasteListener(editor, CCPFilePath);
         actionManager.addAnActionListener(copyPasteListener);
         //Add it to the hasCopyPasteListener map
         ProjectInitializer.hasCopyPasteListener.put(document, copyPasteListener);
@@ -59,8 +59,8 @@ public class TrackerLog extends AnAction {
      */
     //TODO Find a way to disable the button after its pressed for an editor tab, without disabling it for the other tabs, because pressing it multiple times adds multiple listener which causes multiple logging of the same event.
     public void update(AnActionEvent e) {
-        Project project = (Project) e.getData(CommonDataKeys.PROJECT);
-        Editor editor = (Editor) e.getData(CommonDataKeys.EDITOR);
+        Project project = e.getData(CommonDataKeys.PROJECT);
+        Editor editor = e.getData(CommonDataKeys.EDITOR);
         if (project!= null && editor!=null && editor.getEditorKind().equals(EditorKind.UNTYPED) && ProjectInitializer.hasDocumentListener != null){
             Document document = editor.getDocument();
             VirtualFile file = FileDocumentManager.getInstance().getFile(document);

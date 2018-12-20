@@ -11,17 +11,11 @@ import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.openapi.editor.event.EditorFactoryEvent;
 import com.intellij.openapi.editor.event.EditorFactoryListener;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-
-import javax.swing.event.HyperlinkEvent;
-import java.awt.*;
 import java.util.HashMap;
-
-import static java.lang.System.exit;
 
 public class ProjectInitializer implements ProjectComponent {
     static HashMap<Document, DocumentListener> hasDocumentListener;
@@ -37,13 +31,13 @@ public class ProjectInitializer implements ProjectComponent {
         //Todo come up with better way to prevent multiple document listener for one file
         //I couldn't think of anything else but making the variable static which means there can be 1 hasDocuementListener for multiple open projects, so we have to act accordingly
         if(hasDocumentListener==null) {
-            hasDocumentListener = new HashMap<Document, DocumentListener>();
+            hasDocumentListener = new HashMap<>();
         }
         if(notificationOpen==null) {
-            notificationOpen = new HashMap<Document, Notification>();
+            notificationOpen = new HashMap<>();
         }
         if(hasCopyPasteListener==null) {
-            hasCopyPasteListener = new HashMap<Document, CopyPasteListener>();
+            hasCopyPasteListener = new HashMap<>();
         }
         //This class helps with tracking the editors in the project
         EditorFactory editorFactory = EditorFactory.getInstance();
@@ -93,9 +87,9 @@ public class ProjectInitializer implements ProjectComponent {
                         ProjectInitializer.hasDocumentListener.put(document, documentListener);
                         //Get the action manager that will help with the copy paste logging
                         ActionManager actionManager = ActionManager.getInstance();
-                        String CCPFilePath = path.substring(0, path.length()-2) + "copy_paste" + ".csv";
+                        String CCPFilePath = path.substring(0, path.length()-2) + "csv";
                         //Add the listener that will log copy-paste
-                        CopyPasteListener copyPasteListener = new CopyPasteListener( editor.getSelectionModel(), editor.getCaretModel(), CCPFilePath, document);
+                        CopyPasteListener copyPasteListener = new CopyPasteListener(editor, CCPFilePath);
                         actionManager.addAnActionListener(copyPasteListener);
                         hasCopyPasteListener.put(document, copyPasteListener);
                     }
