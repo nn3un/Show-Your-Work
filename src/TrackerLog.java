@@ -1,34 +1,16 @@
-import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.CommonDataKeys;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorKind;
-import com.intellij.openapi.editor.actionSystem.EditorAction;
-import com.intellij.openapi.editor.event.DocumentEvent;
-import com.intellij.openapi.editor.event.DocumentListener;
+import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.editor.*;
+import com.intellij.openapi.editor.actionSystem.EditorActionManager;
+import com.intellij.openapi.editor.event.EditorFactoryListener;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
-import org.apache.commons.logging.Log;
+import com.intellij.openapi.wm.IdeFrame;
+import com.intellij.openapi.wm.StatusBar;
+import com.intellij.openapi.wm.WindowManager;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
-
-import static java.lang.System.exit;
 
 public class TrackerLog extends AnAction {
     private Logger logger = LogManager.getLogger("TrackerLog");
@@ -38,20 +20,42 @@ public class TrackerLog extends AnAction {
      * @param anActionEvent Occurs when the 'Start logging edit' button is pressed
      */
     public void actionPerformed(@NotNull final AnActionEvent anActionEvent){
-        //Get the editor for the current document tab, and from that get the document
-        Editor editor = (Editor) anActionEvent.getRequiredData(CommonDataKeys.EDITOR);
+        //Get the editor for the current document tab
+        Editor editor = anActionEvent.getRequiredData(CommonDataKeys.EDITOR);
+        initializeListeners(editor);
+    }
+
+    /**
+     * Updates the view of the 'Start logging edit' option
+     *
+     * @param e The button press for "Start Logging Edit"
+     */
+    //TODO Find a way to disable the button after its pressed for an editor tab, without disabling it for the other tabs, because pressing it multiple times adds multiple listener which causes multiple logging of the same event.
+    public void update(AnActionEvent e) {
+        Project project = e.getData(CommonDataKeys.PROJECT);
+        Editor editor = e.getData(CommonDataKeys.EDITOR);
+        if (project!= null && editor!=null && editor.getEditorKind().equals(EditorKind.UNTYPED) && ProjectInitializer.hasDocumentListener != null){
+            Document document = editor.getDocument();
+            VirtualFile file = FileDocumentManager.getInstance().getFile(document);
+            if (file != null && file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {
+                //The button would be available only when there is no listener in the document already and when it's a .py file
+                e.getPresentation().setVisible(true);
+                return;
+            }
+        }
+        e.getPresentation().setVisible(false);
+    }
+
+    /**
+    Helper method to get the trackers started.
+    @param editor currently active editor**/
+    private void initializeListeners(Editor editor){
         Document document = editor.getDocument();
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
         if(file == null){
             logger.error("The virtual file doesn't exist");
             return;
         }
-        if (ProjectInitializer.notificationOpen.containsKey(document)){
-            //if there's a notification open it should be removed
-            ProjectInitializer.notificationOpen.get(document).expire();
-            ProjectInitializer.notificationOpen.remove(document);
-        }
-        //The file ends with .py and has no listener, so we are going to add a listener to it
         String originalPath = file.getCanonicalPath();
         if (originalPath == null || !originalPath.endsWith(".py")){
             logger.error("The virtual file doesn't exist");
@@ -65,26 +69,29 @@ public class TrackerLog extends AnAction {
         document.addDocumentListener(documentListener);
         //Since we just added a listener, it should be included in the map hasDocumentListener
         ProjectInitializer.hasDocumentListener.put(document, documentListener);
-    }
 
-    /**
-     * Updates the view of the 'Start logging edit' option
-     *
-     * @param e The button press for "Start Logging Edit"
-     */
-    //TODO Find a way to disable the button after its pressed for an editor tab, without disabling it for the other tabs, because pressing it multiple times adds multiple listener which causes multiple logging of the same event.
-    public void update(AnActionEvent e) {
-        Project project = (Project) e.getData(CommonDataKeys.PROJECT);
-        Editor editor = (Editor) e.getData(CommonDataKeys.EDITOR);
-        if (project!= null && editor!=null && editor.getEditorKind().equals(EditorKind.UNTYPED) && ProjectInitializer.hasDocumentListener != null){
-            Document document = editor.getDocument();
-            VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-            if (file != null && file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {
-                //The button would be available only when there is no listener in the document already and when it's a .py file
-                e.getPresentation().setVisible(true);
-                return;
-            }
+        //Add the listener that will log copy-paste
+        ActionManager actionManager = ActionManager.getInstance();
+        String CCPFilePath = originalPath.substring(0, originalPath.length()-2)+ "csv";
+        CopyPasteListener copyPasteListener = new CopyPasteListener(editor, CCPFilePath);
+        actionManager.addAnActionListener(copyPasteListener);
+        ProjectInitializer.hasCopyPasteListener.put(document, copyPasteListener);
+
+        if (ProjectInitializer.notificationOpen.containsKey(document)){
+            //if there's a notification open it should be removed
+            ProjectInitializer.notificationOpen.get(document).expire();
+            ProjectInitializer.notificationOpen.remove(document);
         }
-        e.getPresentation().setVisible(false);
+
+        //Changing the widget text
+        IdeFrame frame = WindowManager.getInstance().getIdeFrame(editor.getProject());
+        StatusBar statusBar = frame.getStatusBar();
+        //First remove all the other widgets
+        statusBar.removeWidget("Show-your-work");
+        MyStatusBarWidget myStatusBarWidget = new MyStatusBarWidget();
+        //Set the appropriate text
+        myStatusBarWidget.setText("Document Tracking: ON");
+        statusBar.addWidget(myStatusBarWidget, "before Position");
+        statusBar.updateWidget("Show-your-work");
     }
 }
