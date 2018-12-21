@@ -13,3 +13,7 @@ Once an editor tab is opened with a .py file, the 'Start Logging Edits' button c
 The 'Generate Zip for Submission' button creates a zip file named '_log.zip' in the current directory, which contains a text version of the original file, as well as the CSV log file. It only appears if the file is .py and has a log running.
 
 The 'Generate Original from Log' button generates a txt file that uses the CSV log file to replicate the original into a file named '_currentVersion.txt', also located in the same directory as the original (mostly here for testing purposes). Like the 'Generate Zip for Submission' button, this button requires a .py file and its associated log file to be visible to the user.
+
+When the plugin is running for the active editor tab, the status bar has the text "Document Tracking: ON". If not, then the status bar should have the text "PLUGIN NOT RUNNING". 
+
+![Status Bar](statusbar.PNG)

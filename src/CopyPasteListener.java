@@ -1,6 +1,7 @@
 import com.intellij.execution.dashboard.actions.RunAction;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.DataContext;
 import com.intellij.openapi.actionSystem.ex.AnActionListener;
 import com.intellij.openapi.editor.*;
@@ -9,6 +10,7 @@ import com.intellij.openapi.ide.CopyPasteManager;
 
 import java.awt.datatransfer.DataFlavor;
 import java.io.IOException;
+import java.util.Objects;
 
 public class CopyPasteListener implements AnActionListener {
     private Editor editor;
@@ -21,6 +23,10 @@ public class CopyPasteListener implements AnActionListener {
     }
     @Override
     public void beforeActionPerformed(AnAction anAction, DataContext dataContext, AnActionEvent anActionEvent) {
+        //Make sure the copy paste happened in the currently active editor
+        if(!Objects.equals(anActionEvent.getData(CommonDataKeys.EDITOR), editor)){
+            return;
+        }
         if(editor.getSelectionModel().getSelectedText() != null) {
             //For paste you might have the case where a text range is selected and then paste happens, in that case we need to know the beginning of the selected text
             oldOffset = editor.getSelectionModel().getSelectionStart();
@@ -33,6 +39,11 @@ public class CopyPasteListener implements AnActionListener {
 
     @Override
     public void afterActionPerformed(AnAction anAction, DataContext dataContext, AnActionEvent event) {
+        //Make sure the copy paste happened in the currently active editor
+        if(!Objects.equals(event.getData(CommonDataKeys.EDITOR), editor)){
+            return;
+        }
+        System.out.println(anAction.getClass());
         if (anAction instanceof com.intellij.openapi.editor.actions.CutAction || anAction instanceof com.intellij.ide.actions.CutAction || anAction instanceof com.intellij.openapi.editor.actions.CopyAction || anAction instanceof com.intellij.ide.actions.CopyAction){
             //If we have a copy or cut action we must add this as a copy and let the offset be the start of the current selection, and the text being copied to clipboard be the selected text
             try {
