@@ -1,12 +1,15 @@
 import com.intellij.notification.*;
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.ex.AnActionListener;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.EditorFactory;
 import com.intellij.openapi.editor.EditorKind;
+import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.openapi.editor.event.EditorFactoryEvent;
 import com.intellij.openapi.editor.event.EditorFactoryListener;
@@ -64,7 +67,7 @@ public class ProjectInitializer implements ProjectComponent {
                 }
                 Document document = editor.getDocument();
                 VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-                if (file == null || !file.getName().endsWith(".py") || ProjectInitializer.notificationOpen.containsKey(document)) {
+                if (file == null || !file.getName().endsWith(".py") || ProjectInitializer.notificationOpen.containsKey(document) ||ProjectInitializer.hasDocumentListener.containsKey(document)) {
                     //if it's not a .py file, we're not interested in tracking its changes. If it already has a listener or a notification, we don't want to add a second one, as that will lead to double logging
                     logger.info("The correct file doesn't exist, or it's somehow already in one of the maps");
                     return;
@@ -92,10 +95,8 @@ public class ProjectInitializer implements ProjectComponent {
                     ProjectInitializer.notificationOpen.get(documentClosed).expire();
                     ProjectInitializer.notificationOpen.remove(documentClosed);
                 }
-                if (hasCopyPasteListener.containsKey(documentClosed)){
-                    ActionManager.getInstance().removeAnActionListener(hasCopyPasteListener.get(documentClosed));
-                    hasCopyPasteListener.remove(documentClosed);
-                }
+                //ActionManager.getInstance().removeAnActionListener(hasCopyPasteListener.get(documentClosed));
+                hasCopyPasteListener.remove(documentClosed);
             }
 
         }, () -> {
@@ -194,15 +195,14 @@ public class ProjectInitializer implements ProjectComponent {
         ProjectInitializer.hasDocumentListener.put(document, documentListener);
 
 
-        //Get the action manager that will help with the copy paste logging
-        ActionManager actionManager = ActionManager.getInstance();
         String CCPFilePath = originalPath.substring(0, originalPath.length()-2)+ "csv";
         //Add the listener that will log copy-paste
         CopyPasteListener copyPasteListener = new CopyPasteListener(editor, CCPFilePath);
-        actionManager.addAnActionListener(copyPasteListener);
+        MessageBus bus = ApplicationManager.getApplication().getMessageBus();
+        MessageBusConnection connection = bus.connect();
+        connection.subscribe(AnActionListener.TOPIC, copyPasteListener);
         //Add it to the hasCopyPasteListener map
         ProjectInitializer.hasCopyPasteListener.put(document, copyPasteListener);
-
 
         //Changing the widget text
         IdeFrame frame = WindowManager.getInstance().getIdeFrame(editor.getProject());

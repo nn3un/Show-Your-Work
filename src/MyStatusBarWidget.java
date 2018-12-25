@@ -15,14 +15,8 @@ public class MyStatusBarWidget implements StatusBarWidget.TextPresentation, Stat
         return text;
     }
 
-    public void setText(String text){
+    void setText(String text){
         this.text = text;
-    }
-
-    @NotNull
-    @Override
-    public String getMaxPossibleText() {
-        return "Running trackers";
     }
 
     @Override

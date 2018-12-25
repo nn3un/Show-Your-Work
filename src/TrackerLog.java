@@ -1,13 +1,18 @@
 import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.ex.AnActionListener;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.editor.actionSystem.EditorActionManager;
 import com.intellij.openapi.editor.event.EditorFactoryListener;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.IdeFrame;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.util.messages.MessageBus;
+import com.intellij.util.messages.MessageBusConnection;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
@@ -74,7 +79,9 @@ public class TrackerLog extends AnAction {
         ActionManager actionManager = ActionManager.getInstance();
         String CCPFilePath = originalPath.substring(0, originalPath.length()-2)+ "csv";
         CopyPasteListener copyPasteListener = new CopyPasteListener(editor, CCPFilePath);
-        actionManager.addAnActionListener(copyPasteListener);
+        MessageBus bus = ApplicationManager.getApplication().getMessageBus();
+        MessageBusConnection connection = bus.connect();
+        connection.subscribe(AnActionListener.TOPIC, copyPasteListener);
         ProjectInitializer.hasCopyPasteListener.put(document, copyPasteListener);
 
         if (ProjectInitializer.notificationOpen.containsKey(document)){
