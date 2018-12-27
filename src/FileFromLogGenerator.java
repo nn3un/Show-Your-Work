@@ -8,6 +8,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -63,7 +64,7 @@ public class FileFromLogGenerator extends AnAction {
         }
     }
     @Override
-    public void update(AnActionEvent e) {
+    public void update(@NotNull AnActionEvent e) {
         Project project = (Project)e.getData(CommonDataKeys.PROJECT);
         Editor editor = (Editor)e.getData(CommonDataKeys.EDITOR);
         if (project!= null && editor!= null && editor.getEditorKind().equals(EditorKind.UNTYPED)){

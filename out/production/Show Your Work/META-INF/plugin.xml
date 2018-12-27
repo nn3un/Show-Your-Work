@@ -2,17 +2,14 @@
     <id>UVACSUGresearchSYW</id>
     <name>Show Your Work</name>
     <version>1.0</version>
-    <vendor email="support@virginia.edu" url="http://www.cs.virginia.edu">UVA CS</vendor>
+    <vendor url="https://github.com/nn3un/Show-Your-Work/issues">Github</vendor>
 
     <description><![CDATA[
 	This plugin allows students to log their code development history<br>
-	<em>most HTML tags may be used</em>
 	]]></description>
 
-    <change-notes><![CDATA[
-	<br>
-	<em>most HTML tags may be used</em>
-	]]>
+    <change-notes>
+        changed project component to application component
     </change-notes>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
@@ -23,12 +20,12 @@
     <!-- This depend statement allows us to run it with Pycharm, without it the plugin would only run on Intellij -->
     <depends>com.intellij.modules.lang</depends>
     -->
-    <!-- This project is initiated when a new project is opened -->
-    <project-components>
+    <!-- The classes that handle actions that need to be done when a project is initialized -->
+    <application-components>
         <component>
-            <implementation-class>ProjectInitializer</implementation-class>
+            <implementation-class>IdeInitializer</implementation-class>
         </component>
-    </project-components>
+    </application-components>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
     </extensions>

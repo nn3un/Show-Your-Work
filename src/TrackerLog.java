@@ -2,15 +2,13 @@ import com.intellij.openapi.actionSystem.*;
 import com.intellij.openapi.actionSystem.ex.AnActionListener;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.editor.*;
-import com.intellij.openapi.editor.actionSystem.EditorActionManager;
-import com.intellij.openapi.editor.event.EditorFactoryListener;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.IdeFrame;
 import com.intellij.openapi.wm.StatusBar;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.psi.PsiElement;
 import com.intellij.util.messages.MessageBus;
 import com.intellij.util.messages.MessageBusConnection;
 import org.apache.log4j.LogManager;
@@ -35,14 +33,13 @@ public class TrackerLog extends AnAction {
      *
      * @param e The button press for "Start Logging Edit"
      */
-    //TODO Find a way to disable the button after its pressed for an editor tab, without disabling it for the other tabs, because pressing it multiple times adds multiple listener which causes multiple logging of the same event.
-    public void update(AnActionEvent e) {
+    public void update(@NotNull AnActionEvent e) {
         Project project = e.getData(CommonDataKeys.PROJECT);
         Editor editor = e.getData(CommonDataKeys.EDITOR);
-        if (project!= null && editor!=null && editor.getEditorKind().equals(EditorKind.UNTYPED) && ProjectInitializer.hasDocumentListener != null){
+        if (project!= null && editor!=null && editor.getEditorKind().equals(EditorKind.UNTYPED) && IdeInitializer.hasDocumentListener != null){
             Document document = editor.getDocument();
             VirtualFile file = FileDocumentManager.getInstance().getFile(document);
-            if (file != null && file.getName().endsWith(".py") && !ProjectInitializer.hasDocumentListener.containsKey(document)) {
+            if (file != null && file.getName().endsWith(".py") && !IdeInitializer.hasDocumentListener.containsKey(document)) {
                 //The button would be available only when there is no listener in the document already and when it's a .py file
                 e.getPresentation().setVisible(true);
                 return;
@@ -73,7 +70,7 @@ public class TrackerLog extends AnAction {
         DocumentListenerImpl documentListener = new DocumentListenerImpl(originalPath);
         document.addDocumentListener(documentListener);
         //Since we just added a listener, it should be included in the map hasDocumentListener
-        ProjectInitializer.hasDocumentListener.put(document, documentListener);
+        IdeInitializer.hasDocumentListener.put(document, documentListener);
 
         //Add the listener that will log copy-paste
         ActionManager actionManager = ActionManager.getInstance();
@@ -82,12 +79,12 @@ public class TrackerLog extends AnAction {
         MessageBus bus = ApplicationManager.getApplication().getMessageBus();
         MessageBusConnection connection = bus.connect();
         connection.subscribe(AnActionListener.TOPIC, copyPasteListener);
-        ProjectInitializer.hasCopyPasteListener.put(document, copyPasteListener);
+        IdeInitializer.hasCopyPasteListener.put(document, copyPasteListener);
 
-        if (ProjectInitializer.notificationOpen.containsKey(document)){
+        if (IdeInitializer.notificationOpen.containsKey(document)){
             //if there's a notification open it should be removed
-            ProjectInitializer.notificationOpen.get(document).expire();
-            ProjectInitializer.notificationOpen.remove(document);
+            IdeInitializer.notificationOpen.get(document).expire();
+            IdeInitializer.notificationOpen.remove(document);
         }
 
         //Changing the widget text
@@ -101,4 +98,5 @@ public class TrackerLog extends AnAction {
         statusBar.addWidget(myStatusBarWidget, "before Position");
         statusBar.updateWidget("Show-your-work");
     }
+
 }
